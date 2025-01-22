@@ -4,10 +4,12 @@ import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
   {
-    watchHistory: {
-      type: Schema.Types.ObjectId,
-      ref: "Video",
-    },
+    watchHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Video",
+      },
+    ],
     username: {
       type: String,
       required: true,
@@ -76,7 +78,7 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
       _id: this._id,
-    }, 
+    },
     process.env.REFRESH_TOKEN,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
